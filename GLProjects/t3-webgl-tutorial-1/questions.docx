@@ -1,0 +1,7 @@
+Question 1: I expect to see either a blank canvas or a canvas with a square of some color in it.
+ 
+Question 2: The output was a black square on the canvas.
+
+Question 3: When the alert box is set to true, a pop up box appears instead of a black box on the canvas.
+
+Question 4: Because the back buffer covers over the front buffer as to not cause screen glitches, so the back buffer stored the colors of the four square while the front buffer maintained the appearance of the black one. 

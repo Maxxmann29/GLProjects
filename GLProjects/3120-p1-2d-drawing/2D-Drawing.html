@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Draw Application</title>
+
+        <script id="vertex-shader" type="x-shader/x-vertex">
+
+            attribute vec4 a_Position;
+
+            void main()
+                {
+                gl_Position = a_Position;
+                gl_PointSize = 10.0;
+                }
+        </script>
+
+        <script id="fragment-shader" type="x-shader/x-fragment">
+
+            precision mediump float;
+            uniform vec4 u_FragColor;
+
+            void main()
+                {
+                gl_FragColor = u_FragColor;
+                }
+        </script>
+    </head>
+
+    <body onload="main()">
+        <h1 id = "App_Title">2D Drawing</h1>
+
+        <div style="float:left">
+            <canvas oncontextmenu="return false;" id="webgl" width="600" height="600" onmousemove="showCoords(event)" onmouseout="clearCoords()">
+                Please use a browser that supports "canvas"
+            </canvas>
+        </div>
+
+        <div style="width:300px; float:left; margin-left:50px;">
+            <button id = "LineButton" style="margin-bottom:10px;margin-top:10px;height:40px; width:100px; background:#00b2b0">Line</button><br>
+            <button id = "TriangleButton" style="margin-bottom:10px;margin-top:10px;height:40px; width:100px">Triangle</button><br>
+            <button id = "QuadButton" style="margin-bottom:10px;margin-top:10px;height:40px; width:100px">Quad</button><br>
+            <button id = "DeleteButton" style="margin-bottom:10px;margin-top:10px;height:40px; width:100px">Delete</button><br>
+            <button id = "screenClearButton" style="margin-bottom:10px;margin-top:10px;height:40px; width:100px">screenClear</button><br>
+            
+            <div>
+                <div>Red: <input type="range" id="RedScale"></div>
+                <div>Green: <input type="range" id="GreenScale"></div>
+                <div>Blue: <input type="range" id="BlueScale"></div>  <br>
+                <canvas onload="updateColorPreviews([0,0,0])" id="CurrColor" width="200" height="10"></canvas>
+
+          </div>
+                      <p id="Coords"> </p>
+        </div>
+
+        <script src="./utils/webgl-utils.js"></script>
+        <script src="./utils/webgl-debug.js"></script>
+        <script src="./utils/cuon-utils.js"></script>
+        <script src="./utils/uncc_webgl_utils.js"></script>
+        <script src="./math/math2D.js"></script>
+        <script src="./math/helpers.js"></script>
+        <script src="2D-Drawing.js"></script>
+
+        <script>
+          function showCoords(ev) {
+              var x = ev.clientX;
+              var y = ev.clientY;
+              var coor = "Coordinates: (" + x + "," + y + ")";
+              document.getElementById("Coords").innerHTML = coor;
+          }
+          function clearCoords(){
+              document.getElementById("Coords").innerHTML = "Coordinates: ";
+          }
+          function updateColorPreview(colors){
+            red = Math.floor(colors[0]*2.55);
+            green = Math.floor(colors[1]*2.55);
+            blue = Math.floor(colors[2]*2.55);
+
+            var c = document.getElementById("CurrColor");
+            var ctx = c.getContext("2d");
+            var color = "#";
+            if (red <=15){
+              color+="0";
+            }
+            color+= red.toString(16).toUpperCase();
+           if(green<=15){
+              color+= "0";
+            }
+            color+= green.toString(16).toUpperCase();
+
+            if(blue<=15){
+              color+= "0";
+            }
+            color+= blue.toString(16).toUpperCase();
+
+            ctx.fillStyle = color;
+            ctx.fillRect(0,0,200,10);
+          }
+        </script>
+    </body>
+</html>
